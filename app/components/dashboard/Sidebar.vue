@@ -13,35 +13,63 @@
 
     <!-- Nav Items -->
     <nav class="flex-1 space-y-1.5 mt-2">
-      <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-syn-accent/10 border border-syn-accent/20 text-syn-accent rounded-lg group transition-colors">
-        <Icon name="heroicons:squares-2x2-solid" class="w-5 h-5" />
+      <NuxtLink 
+        to="/dashboard" 
+        exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent" 
+        class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
+      >
+        <Icon name="heroicons:squares-2x2-solid" class="w-5 h-5 group-[.router-link-exact-active]:text-syn-accent" />
         <span class="font-medium text-[15px]">Dashboard</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface rounded-lg transition-all group">
-        <Icon name="heroicons:archive-box" class="w-5 h-5 group-hover:text-syn-cream transition-colors" />
+      </NuxtLink>
+      
+      <NuxtLink 
+        to="/dashboard/inventory" 
+        exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent" 
+        class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
+      >
+        <Icon name="heroicons:archive-box" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
         <span class="font-medium text-[15px]">Inventory</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface rounded-lg transition-all group">
-        <Icon name="heroicons:banknotes" class="w-5 h-5 group-hover:text-syn-cream transition-colors" />
+      </NuxtLink>
+      
+      <NuxtLink 
+        to="/dashboard/finance" 
+        exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent" 
+        class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
+      >
+        <Icon name="heroicons:banknotes" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
         <span class="font-medium text-[15px]">Finance</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface rounded-lg transition-all group">
-        <Icon name="heroicons:user-group" class="w-5 h-5 group-hover:text-syn-cream transition-colors" />
+      </NuxtLink>
+      
+      <NuxtLink 
+        to="/dashboard/community" 
+        exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent" 
+        class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
+      >
+        <Icon name="heroicons:user-group" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
         <span class="font-medium text-[15px]">Community</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface rounded-lg transition-all group">
-        <Icon name="heroicons:sparkles" class="w-5 h-5 group-hover:text-syn-cream transition-colors" />
+      </NuxtLink>
+      
+      <NuxtLink 
+        to="/dashboard/ai-mentor" 
+        exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent" 
+        class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
+      >
+        <Icon name="heroicons:sparkles" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
         <span class="font-medium text-[15px]">AI Mentor</span>
-      </a>
+      </NuxtLink>
 
       <!-- Preferences -->
       <div class="pt-8 pb-2 px-3">
         <p class="text-[10px] font-bold text-syn-muted tracking-wider uppercase">Preferences</p>
       </div>
-      <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface rounded-lg transition-all group">
-        <Icon name="heroicons:cog-8-tooth" class="w-5 h-5 group-hover:text-syn-cream transition-colors" />
+      <NuxtLink 
+        to="/dashboard/settings" 
+        exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent" 
+        class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
+      >
+        <Icon name="heroicons:cog-8-tooth" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
         <span class="font-medium text-[15px]">Settings</span>
-      </a>
+      </NuxtLink>
     </nav>
 
     <!-- Upgrade Card -->
