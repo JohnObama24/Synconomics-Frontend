@@ -9,7 +9,7 @@
       </div>
       <div class="relative z-10 w-full sm:w-auto">
         <button 
-          @click="showModal = true"
+          @click="showModal = true; selectedThread = null; form = { title: '', content: '' }"
           class="w-full sm:w-auto px-5 py-3 bg-syn-accent/10 text-syn-accent border border-syn-accent/20 rounded-xl font-medium hover:bg-syn-accent hover:text-syn-dark transition-all flex justify-center items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
@@ -33,7 +33,7 @@
           </div>
           <p class="text-syn-muted mb-2 font-medium">No threads yet</p>
           <p class="text-sm text-syn-cream/50 mb-4">Be the first to start a discussion in your area.</p>
-          <button @click="showModal = true" class="text-sm font-medium text-syn-accent hover:text-white transition-colors">
+          <button @click="showModal = true; selectedThread = null; form = { title: '', content: '' }" class="text-sm font-medium text-syn-accent hover:text-white transition-colors">
             Start a Thread
           </button>
         </div>
@@ -67,6 +67,11 @@
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                   <span>Reply</span>
                 </div>
+                <!-- Inline edit action -->
+                <div @click.prevent="openEditModal(thread)" class="flex items-center gap-1.5 hover:text-syn-accent transition-colors opacity-0 group-hover:opacity-100">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                  <span>Edit</span>
+                </div>
               </div>
             </div>
           </div>
@@ -88,7 +93,7 @@
           </div>
         </div>
 
-        <div class="glass-card p-6 rounded-3xl border border-white/5 bg-gradient-to-b from-syn-accent/5 to-transparent">
+        <div class="glass-card p-6 rounded-3xl border border-white/5 bg-linear-to-b from-syn-accent/5 to-transparent">
           <h3 class="font-medium text-white mb-2">Local Radius Match</h3>
           <p class="text-xs text-syn-muted mb-4 leading-relaxed">Expand your business network by finding partners within a 5km radius directly through the community.</p>
           <button class="w-full py-2 bg-syn-darker border border-white/10 hover:border-syn-accent text-sm text-syn-cream rounded-xl transition-all">Scan Network</button>
@@ -99,11 +104,13 @@
     <!-- ini modal buat , negbuat thresadnya -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div class="glass-card max-w-lg w-full p-8 rounded-3xl relative">
-        <button @click="showModal = false" class="absolute top-6 right-6 text-syn-muted hover:text-white transition-colors">
+        <button @click="closeModal" class="absolute top-6 right-6 text-syn-muted hover:text-white transition-colors">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
 
-        <h2 class="font-display text-2xl mb-6 text-white tracking-tight">Post to Community</h2>
+        <h2 class="font-display text-2xl mb-6 text-white tracking-tight">
+          {{ selectedThread ? 'Edit Thread' : 'Post to Community' }}
+        </h2>
         
         <form @submit.prevent="handleCreateThread" class="space-y-5">
           <div>
@@ -133,7 +140,7 @@
             :disabled="isSaving"
             class="w-full py-4 mt-6 bg-syn-accent text-syn-dark rounded-xl font-display font-medium hover:bg-white transition-colors disabled:opacity-50"
           >
-            {{ isSaving ? 'Posting...' : 'Create Thread' }}
+            {{ isSaving ? 'Saving...' : (selectedThread ? 'Update Thread' : 'Create Thread') }}
           </button>
         </form>
       </div>
@@ -146,12 +153,14 @@
 import { onMounted, ref } from 'vue';
 
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'dashboard',
+  middleware:'auth'
 });
 
-const { threads, isLoading, isSaving, fetchThreads, createThread } = useCommunity();
+const { threads, isLoading, isSaving, fetchThreads, createThread, updateThread } = useCommunity();
 
 const showModal = ref(false);
+const selectedThread = ref<any>(null);
 const form = ref({
   title: '',
   content: ''
@@ -161,18 +170,36 @@ onMounted(() => {
   fetchThreads();
 });
 
+const openEditModal = (thread: any) => {
+  selectedThread.value = thread;
+  form.value = { title: thread.title, content: thread.content };
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  showModal.value = false;
+  selectedThread.value = null;
+  form.value = { title: '', content: '' };
+};
+
 const handleCreateThread = async () => {
   if (!form.value.title || !form.value.content) return;
   
   try {
-    await createThread({
-      title: form.value.title,
-      content: form.value.content
-    });
-    showModal.value = false;
-    form.value = { title: '', content: '' };
+    if (selectedThread.value) {
+      await updateThread(selectedThread.value.id, {
+        title: form.value.title,
+        content: form.value.content
+      });
+    } else {
+      await createThread({
+        title: form.value.title,
+        content: form.value.content
+      });
+    }
+    closeModal();
   } catch (err) {
-    console.error('Failed to create thread', err);
+    console.error('Failed to create/update thread', err);
   }
 };
 

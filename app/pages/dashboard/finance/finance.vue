@@ -6,10 +6,22 @@
       <div class="relative z-10">
         <h1 class="text-3xl font-serif text-white mb-2 tracking-tight">Financial management</h1>
         <p class="text-syn-muted text-[15px]">Monitor the financial health of your core business.</p>
+        
+        <div class="mt-4 flex items-center gap-3" v-if="businesses.length > 0">
+          <label class="text-sm text-syn-muted font-medium">Pilih Bisnis:</label>
+          <select 
+            v-model="activeBusinessId" 
+            @change="handleBusinessChange"
+            class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-syn-cream focus:outline-none focus:border-syn-accent/50 appearance-none pr-8 cursor-pointer"
+            style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23A3A3A3%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.7rem top 50%; background-size: 0.65rem auto;"
+          >
+            <option v-for="b in businesses" :key="b.id" :value="b.id">{{ b.name }}</option>
+          </select>
+        </div>
       </div>
       <div class="relative z-10 hidden sm:block">
         <button 
-          @click="showModal = true"
+          @click="openCreateModal"
           v-if="activeBusinessId"
           class="px-5 py-3 bg-syn-accent/10 text-syn-accent border border-syn-accent/20 rounded-xl font-medium hover:bg-syn-accent hover:text-syn-dark transition-all flex items-center gap-2"
         >
@@ -73,7 +85,7 @@
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
         </div>
         <p class="text-syn-muted mb-2">No transactions yet</p>
-        <button @click="showModal = true" class="text-sm font-medium text-syn-accent hover:text-white transition-colors">
+        <button @click="openCreateModal" class="text-sm font-medium text-syn-accent hover:text-white transition-colors">
           Record your first transaction
         </button>
       </div>
@@ -109,9 +121,14 @@
                 {{ item.category === 'revenue' ? '+' : '-' }} {{ formatCurrency(item.amount) }}
               </td>
               <td class="px-6 py-4">
-                <button @click="handleDelete(item.id)" class="p-2 text-syn-muted hover:text-red-400 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-all focus:opacity-100">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                </button>
+                <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button @click="handleEdit(item)" class="p-2 text-syn-muted hover:text-syn-cream bg-white/5 rounded-lg border border-transparent hover:border-syn-accent/30 transition-all focus:opacity-100">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                  </button>
+                  <button @click="handleDelete(item.id)" class="p-2 text-syn-muted hover:text-red-400 bg-white/5 rounded-lg border border-transparent hover:border-red-500/30 transition-all focus:opacity-100">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -122,7 +139,8 @@
     <DashboardExpenseFormModal 
       v-if="showModal" 
       :business-id="activeBusinessId" 
-      @close="showModal = false"
+      :initialData="selectedExpense"
+      @close="closeModal"
       @saved="onExpenseSaved"
     />
   </div>
@@ -132,24 +150,33 @@
 import { computed, onMounted, ref } from 'vue';
 
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'dashboard',
+  middleware: 'auth',
+  path: '/dashboard/finance'
 });
 
 const { businesses, isLoading: businessesLoading, fetchBusinesses } = useBusiness();
 const { expenses, isLoading: expensesLoading, fetchExpenses, deleteExpense } = useExpense();
 
 const showModal = ref(false);
+const selectedExpense = ref(null);
 
-const activeBusinessId = computed(() => {
-  return businesses.value[0]?.id ?? 0;
-});
+const activeBusinessId = ref<number>(0);
 
 onMounted(async () => {
   await fetchBusinesses();
-  if (activeBusinessId.value) {
+  const firstBusiness = businesses.value?.[0];
+  if (firstBusiness) {
+    activeBusinessId.value = firstBusiness.id;
     await fetchExpenses(activeBusinessId.value);
   }
 });
+
+const handleBusinessChange = async () => {
+  if (activeBusinessId.value) {
+    await fetchExpenses(activeBusinessId.value);
+  }
+};
 
 const totalRevenue = computed(() => {
   return expenses.value
@@ -173,8 +200,23 @@ const sortedExpenses = computed(() => {
   });
 });
 
-const onExpenseSaved = async () => {
+const openCreateModal = () => {
+  selectedExpense.value = null;
+  showModal.value = true;
+};
+
+const handleEdit = (expense: any) => {
+  selectedExpense.value = expense;
+  showModal.value = true;
+};
+
+const closeModal = () => {
   showModal.value = false;
+  selectedExpense.value = null;
+};
+
+const onExpenseSaved = async () => {
+  closeModal();
   if (activeBusinessId.value) {
     await fetchExpenses(activeBusinessId.value);
   }

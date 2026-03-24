@@ -16,6 +16,13 @@ export const expenseService = {
     });
   },
 
+  update(id: number, payload: any): Promise<ApiResponse<Expense>> {
+    return apiFetch(`/expenses/${id}`, {
+      method: 'PUT',
+      body: payload
+    });
+  },
+
   delete(id: number): Promise<ApiResponse<null>> {
     return apiFetch(`/expenses/${id}`, {
       method: 'DELETE'

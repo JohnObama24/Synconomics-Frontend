@@ -51,13 +51,29 @@
           <div class="w-10 h-10 rounded-full bg-syn-darker border border-white/10 flex items-center justify-center shrink-0">
             <span class="text-syn-accent font-medium text-sm">{{ reply.user?.name?.charAt(0) || '?' }}</span>
           </div>
-          <div class="flex-1 min-w-0">
+          <div class="flex-1 min-w-0 group/reply relative">
             <div class="flex items-center gap-2 mb-2">
               <span class="font-medium text-white text-sm">{{ reply.user?.name || 'Unknown User' }}</span>
               <span class="text-xs text-syn-muted">&bull;</span>
               <span class="text-xs text-syn-muted">{{ formatDate(reply.created_at) }}</span>
             </div>
-            <p class="text-sm text-syn-cream/80 leading-relaxed font-sans">{{ reply.content }}</p>
+            
+            <div v-if="editingReplyId === reply.id" class="mt-2 text-sm">
+              <textarea 
+                v-model="editingContent"
+                rows="2"
+                class="w-full bg-syn-darker border border-white/10 rounded-xl px-3 py-2 focus:border-syn-accent outline-none text-white resize-none"
+              ></textarea>
+              <div class="flex gap-2 mt-2">
+                <button @click="submitEditReply(reply.id)" class="px-3 py-1 bg-syn-accent text-syn-dark rounded-md font-medium text-xs">Save</button>
+                <button @click="editingReplyId = null" class="px-3 py-1 bg-white/5 text-syn-muted rounded-md font-medium text-xs">Cancel</button>
+              </div>
+            </div>
+            <p v-else class="text-sm text-syn-cream/80 leading-relaxed font-sans">{{ reply.content }}</p>
+
+            <div v-if="editingReplyId !== reply.id" class="absolute top-0 right-0 opacity-0 group-hover/reply:opacity-100 transition-opacity flex gap-2">
+              <button @click="startEditingReply(reply)" class="text-xs text-syn-muted hover:text-syn-accent">Edit</button>
+            </div>
           </div>
         </div>
       </div>
@@ -90,7 +106,8 @@
 import { computed, onMounted, ref } from 'vue';
 
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'dashboard',
+  middleware: 'auth'
 });
 
 const route = useRoute();
@@ -99,10 +116,12 @@ const threadId = computed(() => Number(route.params.id));
 const { 
   currentThread, replies, 
   isLoading, isSaving, 
-  fetchThreadById, fetchReplies, createReply 
+  fetchThreadById, fetchReplies, createReply, updateReply 
 } = useCommunity();
 
 const replyContent = ref('');
+const editingReplyId = ref<number | null>(null);
+const editingContent = ref('');
 
 onMounted(async () => {
   if (threadId.value) {
@@ -129,6 +148,21 @@ const handleReply = async () => {
     // Optional: await fetchReplies(threadId.value);
   } catch (err) {
     console.error('Failed to post reply', err);
+  }
+};
+
+const startEditingReply = (reply: any) => {
+  editingReplyId.value = reply.id;
+  editingContent.value = reply.content;
+};
+
+const submitEditReply = async (id: number) => {
+  if (!editingContent.value.trim()) return;
+  try {
+    await updateReply(id, { content: editingContent.value });
+    editingReplyId.value = null;
+  } catch (err) {
+    console.error('Failed to update reply', err);
   }
 };
 

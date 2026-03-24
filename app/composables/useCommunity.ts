@@ -55,6 +55,27 @@ export const useCommunity = () => {
     }
   };
 
+  const updateThread = async (id: number, payload: { title: string; content: string }) => {
+    isSaving.value = true;
+    error.value = null;
+    try {
+      const response = await communityService.updateThread(id, payload);
+      const index = threads.value.findIndex(t => t.id === id);
+      if (index !== -1) {
+        threads.value[index] = response.data;
+      }
+      if (currentThread.value?.id === id) {
+        currentThread.value = response.data;
+      }
+      return response.data;
+    } catch (err: any) {
+      error.value = err.data?.message || 'Gagal mengubah thread';
+      throw err;
+    } finally {
+      isSaving.value = false;
+    }
+  };
+
   const deleteThread = async (id: number) => {
     isSaving.value = true;
     error.value = null;
@@ -98,6 +119,24 @@ export const useCommunity = () => {
     }
   };
   
+  const updateReply = async (id: number, payload: { content: string }) => {
+    isSaving.value = true;
+    error.value = null;
+    try {
+      const response = await communityService.updateReply(id, payload);
+      const index = replies.value.findIndex(r => r.id === id);
+      if (index !== -1) {
+        replies.value[index] = response.data;
+      }
+      return response.data;
+    } catch (err: any) {
+      error.value = err.data?.message || 'Gagal mengubah balasan';
+      throw err;
+    } finally {
+      isSaving.value = false;
+    }
+  };
+  
   const deleteReply = async (id: number) => {
     isSaving.value = true;
     error.value = null;
@@ -122,9 +161,11 @@ export const useCommunity = () => {
     fetchThreads,
     fetchThreadById,
     createThread,
+    updateThread,
     deleteThread,
     fetchReplies,
     createReply,
+    updateReply,
     deleteReply
   };
 };

@@ -5,7 +5,9 @@
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
 
-      <h2 class="font-display text-2xl mb-6 text-white tracking-tight">Record Transactions</h2>
+      <h2 class="font-display text-2xl mb-6 text-white tracking-tight">
+        {{ initialData ? 'Edit Transactions' : 'Record Transactions' }}
+      </h2>
       
       <form @submit.prevent="handleSubmit" class="space-y-5">
         <div>
@@ -66,10 +68,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import type { Expense } from '../../types/expense.types';
 
 const props = defineProps<{
   businessId: number;
+  initialData?: Expense | null;
 }>();
 
 const emit = defineEmits<{
@@ -77,14 +81,24 @@ const emit = defineEmits<{
   (e: 'saved', data: any): void;
 }>();
 
-const { createExpense } = useExpense();
+const { createExpense, updateExpense } = useExpense();
 
 const isSubmitting = ref(false);
 const form = ref({
-  title: '',
-  category: 'cost',
-  amount: ''
+  title: props.initialData?.title || '',
+  category: props.initialData?.category || 'cost',
+  amount: props.initialData ? Math.abs(props.initialData.amount).toString() : ''
 });
+
+watch(() => props.initialData, (newVal) => {
+  if (newVal) {
+    form.value = {
+      title: newVal.title,
+      category: newVal.category,
+      amount: Math.abs(newVal.amount).toString()
+    };
+  }
+}, { immediate: true });
 
 const handleSubmit = async () => {
   if (!form.value.title || !form.value.amount || !props.businessId) return;
@@ -98,10 +112,14 @@ const handleSubmit = async () => {
       business_id: props.businessId
     };
     
-    await createExpense(payload);
+    if (props.initialData?.id) {
+      await updateExpense(props.initialData.id, payload);
+    } else {
+      await createExpense(payload);
+    }
     emit('saved', payload);
   } catch (err) {
-    console.error('Failed to create expense', err);
+    console.error('Failed to save expense', err);
   } finally {
     isSubmitting.value = false;
   }
