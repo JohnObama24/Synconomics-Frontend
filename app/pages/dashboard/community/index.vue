@@ -4,8 +4,8 @@
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-syn-darker border border-white/5 p-6 rounded-3xl relative overflow-hidden gap-6">
       <div class="absolute inset-0 bg-linear-to-r from-syn-accent/5 to-transparent pointer-events-none"></div>
       <div class="relative z-10">
-        <h1 class="text-3xl font-serif text-white mb-2 tracking-tight">Community Hub</h1>
-        <p class="text-syn-muted text-[15px]">Connect with other businesses, ask for supplies, or establish local networks.</p>
+        <h1 class="text-3xl font-serif text-white mb-2 tracking-tight">Forum Komunitas</h1>
+        <p class="text-syn-muted text-[15px]">Terhubung dengan bisnis lain, cari suplai, atau bangun jaringan lokal.</p>
       </div>
       <div class="relative z-10 w-full sm:w-auto">
         <button
@@ -13,7 +13,7 @@
           class="w-full sm:w-auto px-5 py-3 bg-syn-accent/10 text-syn-accent border border-syn-accent/20 rounded-xl font-medium hover:bg-syn-accent hover:text-syn-dark transition-all flex justify-center items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          New Thread
+          Buat Diskusi Baru
         </button>
       </div>
     </div>
@@ -31,10 +31,10 @@
           <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4 text-syn-muted">
              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
           </div>
-          <p class="text-syn-muted mb-2 font-medium">No threads yet</p>
-          <p class="text-sm text-syn-cream/50 mb-4">Be the first to start a discussion in your area.</p>
+          <p class="text-syn-muted mb-2 font-medium">Belum ada diskusi</p>
+          <p class="text-sm text-syn-cream/50 mb-4">Jadilah yang pertama memulai diskusi di area Anda.</p>
           <button @click="showModal = true; selectedThread = null; form = { title: '', content: '' }" class="text-sm font-medium text-syn-accent hover:text-white transition-colors">
-            Start a Thread
+            Mulai Diskusi
           </button>
         </div>
 
@@ -53,7 +53,7 @@
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-medium text-white text-sm">{{ thread.user?.name || 'Unknown User' }}</span>
+                <span class="font-medium text-white text-sm">{{ thread.user?.name || 'Pengguna Tidak Dikenal' }}</span>
                 <span class="text-xs text-syn-muted">&bull;</span>
                 <span class="text-xs text-syn-muted">{{ formatDate(thread.created_at) }}</span>
               </div>
@@ -65,7 +65,7 @@
               <div class="flex items-center gap-4 text-xs text-syn-muted">
                 <div class="flex items-center gap-1.5 hover:text-syn-accent transition-colors">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                  <span>Reply</span>
+                  <span>Balas</span>
                 </div>
                 <!-- Inline edit action (Only for thread owner) -->
                 <div v-if="user && thread.user_id === user.id" @click.prevent="openEditModal(thread)" class="flex items-center gap-1.5 hover:text-syn-accent transition-colors opacity-0 group-hover:opacity-100">
@@ -88,20 +88,20 @@
         <div class="glass-card p-6 rounded-3xl border border-white/5">
           <h3 class="font-medium text-white mb-4 flex items-center gap-2">
             <svg class="w-5 h-5 text-syn-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            Popular Tags
+            Tag Populer
           </h3>
           <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 bg-syn-darker border border-white/5 rounded-lg text-xs text-syn-muted hover:text-white cursor-pointer transition-colors">#Supplies</span>
-            <span class="px-3 py-1.5 bg-syn-darker border border-white/5 rounded-lg text-xs text-syn-muted hover:text-white cursor-pointer transition-colors">#Networking</span>
+            <span class="px-3 py-1.5 bg-syn-darker border border-white/5 rounded-lg text-xs text-syn-muted hover:text-white cursor-pointer transition-colors">#Suplai</span>
+            <span class="px-3 py-1.5 bg-syn-darker border border-white/5 rounded-lg text-xs text-syn-muted hover:text-white cursor-pointer transition-colors">#Jaringan</span>
             <span class="px-3 py-1.5 bg-syn-darker border border-white/5 rounded-lg text-xs text-syn-muted hover:text-white cursor-pointer transition-colors">#B2B</span>
-            <span class="px-3 py-1.5 bg-syn-darker border border-white/5 rounded-lg text-xs text-syn-muted hover:text-white cursor-pointer transition-colors">#Inventory</span>
+            <span class="px-3 py-1.5 bg-syn-darker border border-white/5 rounded-lg text-xs text-syn-muted hover:text-white cursor-pointer transition-colors">#Inventaris</span>
           </div>
         </div>
 
         <div class="glass-card p-6 rounded-3xl border border-white/5 bg-linear-to-b from-syn-accent/5 to-transparent">
-          <h3 class="font-medium text-white mb-2">Local Radius Match</h3>
-          <p class="text-xs text-syn-muted mb-4 leading-relaxed">Expand your business network by finding partners within a 5km radius directly through the community.</p>
-          <button @click="navigateTo('/dashboard/supply', { external: true })" class="w-full py-2 bg-syn-darker border border-white/10 hover:border-syn-accent text-sm text-syn-cream rounded-xl transition-all">Scan Network</button>
+          <h3 class="font-medium text-white mb-2">Pencarian Radius Lokal</h3>
+          <p class="text-xs text-syn-muted mb-4 leading-relaxed">Perluas jaringan bisnis Anda dengan menemukan mitra dalam radius 5km melalui komunitas.</p>
+          <button @click="navigateTo('/dashboard/supply', { external: true })" class="w-full py-2 bg-syn-darker border border-white/10 hover:border-syn-accent text-sm text-syn-cream rounded-xl transition-all">Jelajahi Jaringan</button>
         </div>
       </div>
     </div>
@@ -114,15 +114,15 @@
         </button>
 
         <h2 class="font-display text-2xl mb-6 text-white tracking-tight">
-          {{ selectedThread ? 'Edit Thread' : 'Post to Community' }}
+          {{ selectedThread ? 'Edit Diskusi' : 'Posting ke Komunitas' }}
         </h2>
 
         <form @submit.prevent="handleCreateThread" class="space-y-5">
           <div>
-            <label class="block text-sm text-syn-muted mb-2 font-medium">Thread Title</label>
+            <label class="block text-sm text-syn-muted mb-2 font-medium">Judul Diskusi</label>
             <input
               v-model="form.title"
-              placeholder="E.g., Looking for raw coffee beans supplier"
+              placeholder="Contoh: Mencari pemasok biji kopi mentah"
               type="text"
               required
               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-syn-accent outline-none text-white placeholder-white/20 transition-colors"
@@ -130,11 +130,11 @@
           </div>
 
           <div>
-            <label class="block text-sm text-syn-muted mb-2 font-medium">Content</label>
+            <label class="block text-sm text-syn-muted mb-2 font-medium">Konten</label>
             <textarea
               v-model="form.content"
               rows="5"
-              placeholder="Explain your needs or share your advice..."
+              placeholder="Jelaskan kebutuhan Anda atau bagikan saran..."
               required
               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-syn-accent outline-none text-white placeholder-white/20 transition-colors resize-none"
             ></textarea>
@@ -145,7 +145,7 @@
             :disabled="isSaving"
             class="w-full py-4 mt-6 bg-syn-accent text-syn-dark rounded-xl font-display font-medium hover:bg-white transition-colors disabled:opacity-50"
           >
-            {{ isSaving ? 'Saving...' : (selectedThread ? 'Update Thread' : 'Create Thread') }}
+            {{ isSaving ? 'Menyimpan...' : (selectedThread ? 'Perbarui Diskusi' : 'Buat Diskusi') }}
           </button>
         </form>
       </div>
@@ -228,8 +228,8 @@ const formatDate = (dateString: string) => {
   const now = new Date();
   const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
 
-  if (diffInHours < 1) return 'Just now';
-  if (diffInHours < 24) return `${diffInHours}h ago`;
+  if (diffInHours < 1) return 'Baru saja';
+  if (diffInHours < 24) return `${diffInHours} jam lalu`;
 
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',

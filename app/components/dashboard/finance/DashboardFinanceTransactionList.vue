@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-col space-y-6 h-full">
     <div class="flex items-center justify-between">
-      <h3 class="text-xl font-display text-white">Transaction History</h3>
+      <h3 class="text-xl font-display text-white">Riwayat Transaksi</h3>
       <div class="flex gap-2">
         <div class="relative">
           <select v-model="filterStatus" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white outline-none focus:border-syn-accent appearance-none pr-10">
-            <option value="all">All Status</option>
-            <option value="completed">Completed</option>
-            <option value="pending">Pending</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="all">Semua Status</option>
+            <option value="completed">Selesai</option>
+            <option value="pending">Tertunda</option>
+            <option value="cancelled">Dibatalkan</option>
           </select>
           <Icon name="heroicons:chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-syn-muted pointer-events-none" />
         </div>
@@ -20,10 +20,10 @@
 
     <div class="glass-card flex-1 overflow-hidden flex flex-col border border-white/5">
       <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/10 text-[11px] font-bold text-syn-muted tracking-wider uppercase bg-white/5">
-        <div class="col-span-3">Date & Time</div>
-        <div class="col-span-3">Transaction ID</div>
-        <div class="col-span-2">Method</div>
-        <div class="col-span-2 text-right">Amount</div>
+        <div class="col-span-3">Tanggal & Waktu</div>
+        <div class="col-span-3">ID Transaksi</div>
+        <div class="col-span-2">Metode</div>
+        <div class="col-span-2 text-right">Jumlah</div>
         <div class="col-span-2 text-right">Status</div>
       </div>
 
@@ -32,7 +32,7 @@
       </div>
       <div v-else-if="filteredTransactions.length === 0" class="flex-1 flex flex-col items-center justify-center text-syn-muted space-y-2">
         <Icon name="heroicons:document-text" class="w-12 h-12 opacity-20" />
-        <p>No transactions found.</p>
+        <p>Belum ada transaksi.</p>
       </div>
       <div v-else class="flex-1 overflow-y-auto divide-y divide-white/5 custom-scrollbar">
         <div 

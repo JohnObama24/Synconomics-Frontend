@@ -3,7 +3,7 @@
     <!-- Product Selection (Left) -->
     <div class="lg:col-span-2 flex flex-col space-y-4">
       <div class="flex items-center justify-between">
-        <h3 class="text-xl font-display text-white">Products</h3>
+        <h3 class="text-xl font-display text-white">Produk</h3>
         <div class="relative w-64">
            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-syn-muted">
              <Icon name="heroicons:magnifying-glass" class="w-4 h-4" />
@@ -43,7 +43,7 @@
                 <span :class="['text-[10px] px-1.5 py-0.5 rounded-md font-medium capitalize', stockStatus(product).class]">
                   {{ stockStatus(product).text }}
                 </span>
-                <span class="text-[10px] text-syn-muted">{{ product.stock }} left</span>
+                <span class="text-[10px] text-syn-muted">{{ product.stock }} tersisa</span>
               </div>
             </div>
           </div>
@@ -53,7 +53,7 @@
 
     <!-- Cart / Order Summary (Right) -->
     <div class="flex flex-col space-y-4">
-      <h3 class="text-xl font-display text-white">Order Summary</h3>
+      <h3 class="text-xl font-display text-white">Ringkasan Pesanan</h3>
       
       <div class="glass-card flex-1 flex flex-col p-6 border border-white/5">
         <div v-if="cart.length === 0" class="flex-1 flex flex-col items-center justify-center text-syn-muted space-y-4 p-8 text-center">
@@ -61,8 +61,8 @@
             <Icon name="heroicons:shopping-bag" class="w-8 h-8 opacity-20" />
           </div>
           <div>
-            <p class="font-medium text-white/60">Cart is empty</p>
-            <p class="text-xs">Add products to start a transaction</p>
+            <p class="font-medium text-white/60">Keranjang kosong</p>
+            <p class="text-xs">Tambahkan produk untuk memulai transaksi</p>
           </div>
         </div>
         
@@ -99,7 +99,7 @@
               <span class="text-white">{{ formatPrice(cartTotal) }}</span>
             </div>
             <div class="flex justify-between items-center text-sm">
-              <span class="text-syn-muted">Tax (0%)</span>
+              <span class="text-syn-muted">Pajak (0%)</span>
               <span class="text-white">Rp 0</span>
             </div>
             <div class="flex justify-between items-center pt-3 border-t border-white/10">
@@ -111,10 +111,10 @@
           <!-- Action -->
           <div class="mt-6 space-y-3">
              <div class="flex flex-col gap-2">
-               <label class="text-xs text-syn-muted uppercase font-bold tracking-wider">Payment Method</label>
+               <label class="text-xs text-syn-muted uppercase font-bold tracking-wider">Metode Pembayaran</label>
                <div class="grid grid-cols-2 gap-2">
                  <button 
-                   v-for="method in ['Cash', 'Transfer']"
+                   v-for="method in ['Tunai', 'Transfer']"
                    :key="method"
                    @click="paymentMethod = method"
                    :class="['py-2 px-3 rounded-xl border text-xs font-medium transition-all text-center', paymentMethod === method ? 'bg-syn-accent/20 border-syn-accent text-syn-accent' : 'bg-white/5 border-white/10 text-syn-muted hover:bg-white/10']"
@@ -129,14 +129,14 @@
                class="w-full py-4 bg-syn-accent text-syn-dark rounded-2xl font-display font-bold hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
              >
                <Icon v-if="isLoading" name="heroicons:arrow-path" class="w-5 h-5 animate-spin" />
-               <span v-else>Complete Transaction</span>
+               <span v-else>Selesaikan Transaksi</span>
              </button>
              <button 
                @click="clearCart"
                :disabled="isLoading || cart.length === 0"
                class="w-full py-2 text-syn-muted hover:text-red-400 text-xs transition-colors"
              >
-               Clear Cart
+               Kosongkan Keranjang
              </button>
           </div>
         </div>
@@ -205,9 +205,9 @@ const formatPrice = (price: number) => {
 
 const stockStatus = (product: any) => {
   const min = product.min_stock || 10;
-  if (product.stock === 0) return { text: 'Out of Stock', class: 'bg-red-500/20 text-red-400' };
-  if (product.stock <= min) return { text: 'Low Stock', class: 'bg-yellow-500/20 text-yellow-400' };
-  return { text: 'In Stock', class: 'bg-emerald-500/20 text-emerald-400' };
+  if (product.stock === 0) return { text: 'Habis', class: 'bg-red-500/20 text-red-400' };
+  if (product.stock <= min) return { text: 'Stok Rendah', class: 'bg-yellow-500/20 text-yellow-400' };
+  return { text: 'Tersedia', class: 'bg-emerald-500/20 text-emerald-400' };
 };
 
 const handleCheckout = async () => {

@@ -1,20 +1,20 @@
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-    <div class="glass-card max-w-md w-full p-8 rounded-3xl relative">
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+    <div class="glass-card max-w-md w-full p-8 rounded-3xl relative max-h-[90vh] overflow-y-auto">
       <button @click="$emit('close')" class="absolute top-6 right-6 text-syn-muted hover:text-white transition-colors">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
 
       <h2 class="font-display text-2xl mb-6 text-white tracking-tight">
-        {{ initialData ? 'Edit Transactions' : 'Record Transactions' }}
+        {{ initialData ? 'Edit Transaksi' : 'Catat Transaksi' }}
       </h2>
       
       <form @submit.prevent="handleSubmit" class="space-y-5">
         <div>
-          <label class="block text-sm text-syn-muted mb-2 font-medium">Title / Description</label>
+          <label class="block text-sm text-syn-muted mb-2 font-medium">Judul / Deskripsi</label>
           <input 
             v-model="form.title" 
-            placeholder="Example: Purchase raw materials"
+            placeholder="Contoh: Pembelian bahan baku"
             type="text" 
             required 
             class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-syn-accent outline-none text-white placeholder-white/20 transition-colors"
@@ -22,27 +22,27 @@
         </div>
 
         <div>
-           <label class="block text-sm text-syn-muted mb-2 font-medium">Transaction Type</label>
+           <label class="block text-sm text-syn-muted mb-2 font-medium">Tipe Transaksi</label>
            <div class="grid grid-cols-2 gap-3">
              <button 
                type="button"
                @click="form.category = 'revenue'"
                :class="['py-2 px-4 rounded-xl border text-sm font-medium transition-all text-center', form.category === 'revenue' ? 'bg-green-500/20 border-green-500 text-green-400' : 'bg-white/5 border-white/10 text-syn-muted hover:bg-white/10']"
              >
-               Income
+               Pemasukan
              </button>
              <button 
                type="button"
                @click="form.category = 'cost'"
                :class="['py-2 px-4 rounded-xl border text-sm font-medium transition-all text-center', form.category === 'cost' ? 'bg-red-500/20 border-red-500 text-red-400' : 'bg-white/5 border-white/10 text-syn-muted hover:bg-white/10']"
              >
-               Expenditure
+               Pengeluaran
              </button>
            </div>
         </div>
 
         <div>
-          <label class="block text-sm text-syn-muted mb-2 font-medium">Amount (Rp)</label>
+          <label class="block text-sm text-syn-muted mb-2 font-medium">Jumlah (Rp)</label>
           <div class="relative">
             <span class="absolute left-4 top-1/2 -translate-y-1/2 text-syn-muted">Rp</span>
             <input 

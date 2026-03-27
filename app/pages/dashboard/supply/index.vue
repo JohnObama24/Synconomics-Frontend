@@ -2,7 +2,7 @@
   <div class="space-y-6 flex flex-col h-[calc(100vh-8rem)]">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
       <div>
-        <h1 class="font-display text-4xl mb-2 text-syn-accent">Supply Network</h1>
+        <h1 class="font-display text-4xl mb-2 text-syn-accent">Jaringan Suplai</h1>
         <p class="text-syn-muted">Jelajahi jaringan bisnis di sekitar Anda.</p>
       </div>
     </div>
@@ -40,10 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useSupplyNetwork } from '~/composables/useSupplyNetwork';
 import { useBusiness } from '~/composables/useBusiness';
-import { useHead } from '#imports';
 
 useHead({
   link: [

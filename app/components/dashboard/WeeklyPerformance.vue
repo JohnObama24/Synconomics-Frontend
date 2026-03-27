@@ -1,17 +1,17 @@
 <template>
   <div class="bg-syn-dark border border-syn-border rounded-2xl p-5 hover:border-syn-accent/20 transition-colors glow-border">
     <div class="flex items-center justify-between mb-6">
-      <h3 class="text-sm font-semibold text-syn-cream">Weekly Performance</h3>
+      <h3 class="text-sm font-semibold text-syn-cream">Performa Mingguan</h3>
       <button class="text-syn-muted hover:text-syn-accent transition-colors">
         <Icon name="heroicons:ellipsis-horizontal" class="w-5 h-5" />
       </button>
     </div>
 
     <div v-if="isLoadingMetrics" class="h-32 flex items-center justify-center text-syn-muted">
-      Loading performance data...
+      Memuat data performa...
     </div>
     <div v-else-if="weeklyPerformanceData.length === 0" class="h-32 flex items-center justify-center text-syn-muted">
-      No performance data available.
+      Belum ada data performa.
     </div>
     <div v-else class="h-32 flex items-end justify-between gap-2 mt-auto">
       <div 

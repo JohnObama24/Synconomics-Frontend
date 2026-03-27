@@ -1,5 +1,5 @@
 <template>
-  <header class="flex items-center justify-between h-20 px-8 border-b border-syn-border bg-syn-dark/80 backdrop-blur-md sticky top-0 z-40">
+  <header class="flex items-center justify-between h-20 px-8 border-b border-syn-border bg-syn-dark/80 backdrop-blur-md sticky top-0 z-10">
     <!-- <div class="flex-1 max-w-xl relative">
       <Icon name="heroicons:magnifying-glass" class="w-4 h-4 text-syn-muted absolute left-4 top-1/2 -translate-y-1/2" />
       <input
@@ -17,8 +17,8 @@
 
       <NuxtLink to="/dashboard/profile" class="flex items-center gap-3 group">
         <div class="text-right hidden sm:block">
-          <p class="text-xs font-semibold text-syn-cream group-hover:text-syn-accent transition-colors">{{ user?.name || 'User' }}</p>
-          <p class="text-[10px] text-syn-muted group-hover:text-syn-muted/80">{{ user?.role || 'Entrepreneur' }}</p>
+          <p class="text-xs font-semibold text-syn-cream group-hover:text-syn-accent transition-colors">{{ user?.name || 'Pengguna' }}</p>
+          <p class="text-[10px] text-syn-muted group-hover:text-syn-muted/80">{{ user?.role || 'Pengusaha' }}</p>
         </div>
         <div class="w-10 h-10 rounded-full overflow-hidden border border-syn-border group-hover:border-syn-accent/50 transition-colors">
           <img :src="avatarUrl" alt="Profile" class="w-full h-full object-cover" />

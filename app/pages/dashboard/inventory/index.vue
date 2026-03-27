@@ -3,15 +3,15 @@
     <!-- Header -->
     <div class="flex items-end justify-between">
       <div>
-        <h1 class="text-3xl font-serif text-syn-cream mb-2 tracking-tight">Inventory Details</h1>
-        <p class="text-syn-muted text-[15px]">Comprehensive view of all products, stock levels, and metrics.</p>
+        <h1 class="text-3xl font-serif text-syn-cream mb-2 tracking-tight">Detail Inventaris</h1>
+        <p class="text-syn-muted text-[15px]">Tampilan lengkap semua produk, stok, dan metrik.</p>
       </div>
 
       <div class="flex gap-3">
         <button @click="openCreateModal" v-if="activeBusinessId"
           class="flex items-center gap-2 bg-syn-accent text-syn-dark px-4 py-2 rounded-xl text-sm font-bold transition-all hover:bg-white">
           <Icon name="heroicons:plus" class="w-4 h-4" />
-          Add Product
+          Tambah Produk
         </button>
       </div>
     </div>
@@ -30,11 +30,11 @@
         <div class="relative w-80">
           <Icon name="heroicons:magnifying-glass"
             class="w-4 h-4 text-syn-muted absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input type="text" v-model="searchQuery" placeholder="Search SKUs or product names..."
+          <input type="text" v-model="searchQuery" placeholder="Cari SKU atau nama produk..."
             class="w-full bg-syn-surface border border-syn-border rounded-lg py-1.5 pl-10 pr-4 text-sm text-syn-cream placeholder-syn-muted focus:outline-none focus:border-syn-accent/30 transition-all" />
         </div>
         <div class="flex items-center gap-3 text-sm text-syn-muted">
-          Showing {{ filteredProducts.length }} items
+          Menampilkan {{ filteredProducts.length }} item
         </div>
       </div>
 
@@ -42,11 +42,11 @@
       <div
         class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-syn-border text-[11px] font-bold text-syn-muted tracking-wider uppercase bg-syn-surface/30">
         <div class="col-span-1"></div>
-        <div class="col-span-4">Product Details</div>
-        <div class="col-span-2">Category</div>
-        <div class="col-span-2 text-right">Unit Price</div>
-        <div class="col-span-2 text-right">Available Stock</div>
-        <div class="col-span-1 text-center">Actions</div>
+        <div class="col-span-4">Detail Produk</div>
+        <div class="col-span-2">Kategori</div>
+        <div class="col-span-2 text-right">Harga Satuan</div>
+        <div class="col-span-2 text-right">Stok Tersedia</div>
+        <div class="col-span-1 text-center">Aksi</div>
       </div>
 
       <!-- List -->

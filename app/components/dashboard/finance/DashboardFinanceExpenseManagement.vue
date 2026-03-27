@@ -1,22 +1,22 @@
 <template>
   <div class="flex flex-col space-y-6 h-full">
     <div class="flex items-center justify-between">
-      <h3 class="text-xl font-display text-white">Expense Management</h3>
+      <h3 class="text-xl font-display text-white">Manajemen Pengeluaran</h3>
       <button 
         @click="showModal = true"
         class="px-4 py-2 bg-syn-accent text-syn-dark rounded-xl font-bold text-sm hover:bg-white transition-all flex items-center gap-2"
       >
         <Icon name="heroicons:plus-circle" class="w-5 h-5" />
-        Record Expense
+        Catat Pengeluaran
       </button>
     </div>
 
     <div class="glass-card flex-1 overflow-hidden flex flex-col border border-white/5">
       <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/10 text-[11px] font-bold text-syn-muted tracking-wider uppercase bg-white/5">
-        <div class="col-span-3">Date</div>
-        <div class="col-span-4">Category & Title</div>
-        <div class="col-span-3 text-right">Amount</div>
-        <div class="col-span-2 text-right">Actions</div>
+        <div class="col-span-3">Tanggal</div>
+        <div class="col-span-4">Kategori & Judul</div>
+        <div class="col-span-3 text-right">Jumlah</div>
+        <div class="col-span-2 text-right">Aksi</div>
       </div>
 
       <div v-if="isLoading" class="flex-1 flex items-center justify-center">
@@ -24,7 +24,7 @@
       </div>
       <div v-else-if="expenses.length === 0" class="flex-1 flex flex-col items-center justify-center text-syn-muted space-y-2">
         <Icon name="heroicons:banknotes" class="w-12 h-12 opacity-20" />
-        <p>No expenses recorded yet.</p>
+        <p>Belum ada pengeluaran yang dicatat.</p>
       </div>
       <div v-else class="flex-1 overflow-y-auto divide-y divide-white/5 custom-scrollbar">
         <div 
@@ -123,7 +123,7 @@ const onSaved = () => {
 };
 
 const confirmDelete = async (id: number) => {
-  if (confirm('Are you sure you want to delete this expense record?')) {
+  if (confirm('Apakah Anda yakin ingin menghapus catatan pengeluaran ini?')) {
     try {
       await deleteExpense(id);
     } catch (err) {
