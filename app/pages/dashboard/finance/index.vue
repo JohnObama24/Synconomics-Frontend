@@ -36,7 +36,7 @@
       </div>
 
       <!-- Tab Content -->
-      <div class="min-h-[500px]">
+      <div class="min-h-125">
         <!-- Summary -->
         <div v-if="activeTab === 'summary'">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -53,6 +53,7 @@
               :trend="totalCostTrend"
               icon="heroicons:arrow-trending-down"
               iconColor="danger"
+              :invertTrend="true"
             />
             <DashboardStatCard
               title="Net Profit"
@@ -162,23 +163,23 @@ const isPreviousMonth = (dateString: string) => {
 
 // Filter transactions and expenses for current and previous month
 const currentMonthTransactions = computed(() => {
-  const filtered = transactions.value.filter(t => isCurrentMonth(t.transaction_date || t.createdAt || ''));
-  // console.log('currentMonthTransactions computed:', filtered.length, 'items'); // Debugging computed
+  const filtered = transactions.value.filter(t => isCurrentMonth(t.transaction_date || t.created_at || ''));
+  console.log('currentMonthTransactions computed:', filtered.length, 'items'); // Debugging computed
   return filtered;
 });
 const previousMonthTransactions = computed(() => {
-  const filtered = transactions.value.filter(t => isPreviousMonth(t.transaction_date || t.createdAt || ''));
+  const filtered = transactions.value.filter(t => isPreviousMonth(t.transaction_date || t.created_at || ''));
   // console.log('previousMonthTransactions computed:', filtered.length, 'items'); // Debugging computed
   return filtered;
 });
 
 const currentMonthExpenses = computed(() => {
-  const filtered = expenses.value.filter(e => isCurrentMonth(e.expense_date || e.createdAt || ''));
-  // console.log('currentMonthExpenses computed:', filtered.length, 'items'); // Debugging computed
+  const filtered = expenses.value.filter(e => isCurrentMonth(e.created_at || ''));
+  console.log('currentMonthExpenses computed:', filtered.length, 'items'); // Debugging computed
   return filtered;
 });
 const previousMonthExpenses = computed(() => {
-  const filtered = expenses.value.filter(e => isPreviousMonth(e.expense_date || e.createdAt || ''));
+  const filtered = expenses.value.filter(e => isPreviousMonth(e.created_at || ''));
   // console.log('previousMonthExpenses computed:', filtered.length, 'items'); // Debugging computed
   return filtered;
 });
@@ -186,17 +187,17 @@ const previousMonthExpenses = computed(() => {
 // Calculate metrics for current month
 const currentMonthRevenue = computed(() => {
   const revenue = currentMonthTransactions.value.reduce((sum, t) => sum + Number(t.total_amount), 0);
-  // console.log('currentMonthRevenue computed:', revenue); // Debugging computed
+  console.log('currentMonthRevenue computed:', revenue); // Debugging computed
   return revenue;
 });
 const currentMonthCost = computed(() => {
   const cost = currentMonthExpenses.value.reduce((sum, e) => sum + Number(e.amount), 0);
-  // console.log('currentMonthCost computed:', cost); // Debugging computed
+  console.log('currentMonthCost computed:aaa', currentMonthCost.value); // Debugging computed  
   return cost;
 });
 const currentMonthNetProfit = computed(() => {
   const netProfit = currentMonthRevenue.value - currentMonthCost.value;
-  // console.log('currentMonthNetProfit computed:', netProfit); // Debugging computed
+  console.log('currentMonthNetProfit computed:', netProfit); // Debugging computed
   return netProfit;
 });
 
@@ -220,8 +221,9 @@ const previousMonthNetProfit = computed(() => {
 // Helper to calculate trend percentage
 const calculateTrend = (currentValue: number, previousValue: number): number => {
   if (previousValue === 0) {
-    if (currentValue > 0) return 100; // Grew from zero
-    return 0; // No change from zero
+    if (currentValue > 0) return 100;
+    if (currentValue < 0) return -100;
+    return 0;
   }
   return ((currentValue - previousValue) / previousValue) * 100;
 };
