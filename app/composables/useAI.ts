@@ -7,6 +7,7 @@ export const useAI = () => {
   const messages = ref<AIMessageResponse[]>([]);
   const currentSessionId = ref<number | null>(null);
   const sessionResult = ref<AIResultResponse | null>(null);
+  const auditResult = ref<string | null>(null);
 
   // Load active session from local storage on init (Client-side only)
   if (import.meta.client) {
@@ -142,6 +143,43 @@ export const useAI = () => {
     }
   };
 
+  const getAudit = async (businessId: number) => {
+    // Weekly restriction check (Client-side only)
+    if (import.meta.client) {
+      const lastAudit = localStorage.getItem(`syn_last_audit_${businessId}`);
+      if (lastAudit) {
+        const lastDate = new Date(lastAudit);
+        const now = new Date();
+        const diffDays = (now.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24);
+        
+        if (diffDays < 7) {
+          const remainingDays = Math.ceil(7 - diffDays);
+          error.value = `Audit hanya dapat dilakukan sekali seminggu. Silakan coba lagi dalam ${remainingDays} hari.`;
+          return;
+        }
+      }
+    }
+
+    isLoading.value = true;
+    error.value = null;
+    try {
+      const response = await aiService.getAudit(businessId);
+      auditResult.value = response.data;
+      
+      // Save last audit timestamp on success
+      if (import.meta.client) {
+        localStorage.setItem(`syn_last_audit_${businessId}`, new Date().toISOString());
+      }
+    } catch (err: any) {
+      console.error('[AI Audit Error]', err);
+      // Try to get a specific message from backend, otherwise show status
+      const msg = err.data?.message || err.message;
+      error.value = msg ? `${msg} (${err.status || 'Error'})` : `Gagal memuat audit bisnis (${err.status || 'Unknown'})`;
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
   const clearCurrentChat = () => {
     messages.value = [];
     currentSessionId.value = null;
@@ -162,6 +200,8 @@ export const useAI = () => {
     sendMessage,
     sendRoleBasedChat,
     closeAndGetResult,
-    clearCurrentChat
+    getAudit,
+    clearCurrentChat,
+    auditResult
   };
 };
