@@ -4,8 +4,8 @@
     <div class="flex justify-between items-start bg-syn-darker border border-white/5 p-6 rounded-3xl relative overflow-hidden">
       <div class="absolute inset-0 bg-linear-to-r from-syn-accent/5 to-transparent pointer-events-none"></div>
       <div class="relative z-10">
-        <h1 class="text-3xl font-serif text-white mb-2 tracking-tight">Financial Management</h1>
-        <p class="text-syn-muted text-[15px]">Monitor and manage the financial health of your business.</p>
+        <h1 class="text-3xl font-serif text-white mb-2 tracking-tight">Manajemen Keuangan</h1>
+        <p class="text-syn-muted text-[15px]">Pantau dan kelola kesehatan keuangan bisnis Anda.</p>
       </div>
     </div>
 
@@ -13,7 +13,7 @@
     <div v-if="!activeBusinessId && !businessesLoading" class="p-6 bg-red-500/10 border border-red-500/20 rounded-2xl">
       <div class="flex items-center gap-3">
         <Icon name="heroicons:exclamation-triangle" class="w-6 h-6 text-red-500" />
-        <span class="text-red-400 font-medium">Please create or select a business profile to manage your finances.</span>
+        <span class="text-red-400 font-medium">Silakan buat atau pilih profil bisnis untuk mengelola keuangan Anda.</span>
       </div>
     </div>
 
@@ -41,14 +41,14 @@
         <div v-if="activeTab === 'summary'">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <DashboardStatCard
-              title="Total Income"
+              title="Total Pendapatan"
               :value="formatCurrency(currentMonthRevenue)"
               :trend="totalRevenueTrend"
               icon="heroicons:arrow-trending-up"
               iconColor="success"
             />
             <DashboardStatCard
-              title="Total Expenditures"
+              title="Total Pengeluaran"
               :value="formatCurrency(currentMonthCost)"
               :trend="totalCostTrend"
               icon="heroicons:arrow-trending-down"
@@ -56,7 +56,7 @@
               :invertTrend="true"
             />
             <DashboardStatCard
-              title="Net Profit"
+              title="Laba Bersih"
               :value="formatCurrency(currentMonthNetProfit)"
               :trend="netProfitTrend"
               icon="heroicons:banknotes"
@@ -103,10 +103,10 @@ const activeBusinessId = ref<number>(0);
 const activeTab = ref('summary');
 
 const tabs = [
-  { id: 'summary', name: 'Summary', icon: 'heroicons:chart-pie' },
-  { id: 'pos', name: 'POS (Cashier)', icon: 'heroicons:shopping-cart' },
-  { id: 'history', name: 'Transaction History', icon: 'heroicons:clock' },
-  { id: 'expenses', name: 'Expense Management', icon: 'heroicons:document-minus' },
+  { id: 'summary', name: 'Ringkasan', icon: 'heroicons:chart-pie' },
+  { id: 'pos', name: 'POS (Kasir)', icon: 'heroicons:shopping-cart' },
+  { id: 'history', name: 'Riwayat Transaksi', icon: 'heroicons:clock' },
+  { id: 'expenses', name: 'Manajemen Pengeluaran', icon: 'heroicons:document-minus' },
 ];
 
 const fetchDataForBusiness = async () => {

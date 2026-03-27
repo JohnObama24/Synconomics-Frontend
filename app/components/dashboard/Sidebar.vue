@@ -7,7 +7,7 @@
       </div>
       <div>
         <h1 class="text-white font-semibold text-lg leading-tight tracking-wide">Synconomics</h1>
-        <p class="text-[11px] text-syn-muted tracking-wide">Enterprise OS</p>
+        <p class="text-[11px] text-syn-muted tracking-wide">Sistem Bisnis</p>
       </div>
     </div>
 
@@ -19,7 +19,7 @@
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:squares-2x2-solid" class="w-5 h-5 group-[.router-link-exact-active]:text-syn-accent" />
-        <span class="font-medium text-[15px]">Dashboard</span>
+        <span class="font-medium text-[15px]">Dasbor</span>
       </NuxtLink>
 
       <NuxtLink
@@ -28,7 +28,7 @@
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:archive-box" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
-        <span class="font-medium text-[15px]">Inventory</span>
+        <span class="font-medium text-[15px]">Inventaris</span>
       </NuxtLink>
 
       <NuxtLink
@@ -37,7 +37,7 @@
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:banknotes" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
-        <span class="font-medium text-[15px]">Finance</span>
+        <span class="font-medium text-[15px]">Keuangan</span>
       </NuxtLink>
 
       <NuxtLink
@@ -46,16 +46,16 @@
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:user-group" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
-        <span class="font-medium text-[15px]">Community</span>
+        <span class="font-medium text-[15px]">Komunitas</span>
       </NuxtLink>
 
       <NuxtLink
-        to="/business"
+        to="/dashboard/business"
         exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent"
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:building-storefront" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
-        <span class="font-medium text-[15px]">Business</span>
+        <span class="font-medium text-[15px]">Bisnis</span>
       </NuxtLink>
 
       <NuxtLink
@@ -65,7 +65,7 @@
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:map" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
-        <span class="font-medium text-[15px]">Supply Network</span>
+        <span class="font-medium text-[15px]">Jaringan Suplai</span>
       </NuxtLink>
 
 
@@ -76,12 +76,12 @@
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:sparkles" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
-        <span class="font-medium text-[15px]">AI Mentor</span>
+        <span class="font-medium text-[15px]">Mentor AI</span>
       </NuxtLink>
 
       <!-- Preferences -->
       <div class="pt-8 pb-2 px-3">
-        <p class="text-[10px] font-bold text-syn-muted tracking-wider uppercase">Preferences</p>
+        <p class="text-[10px] font-bold text-syn-muted tracking-wider uppercase">Pengaturan</p>
       </div>
       <NuxtLink
         to="/dashboard/profile"
@@ -89,7 +89,7 @@
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
       >
         <Icon name="heroicons:cog-8-tooth" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
-        <span class="font-medium text-[15px]">Settings</span>
+        <span class="font-medium text-[15px]">Profil</span>
       </NuxtLink>
     </nav>
   </aside>

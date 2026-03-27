@@ -1,25 +1,25 @@
 <template>
   <div class="flex flex-col">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold text-syn-cream">Product Management</h2>
-      <button @click="navigateTo('/dashboard/inventory')" class="text-sm text-syn-accent font-medium hover:text-syn-gold transition-colors">View All Inventory</button>
+      <h2 class="text-lg font-semibold text-syn-cream">Manajemen Produk</h2>
+      <button @click="navigateTo('/dashboard/inventory')" class="text-sm text-syn-accent font-medium hover:text-syn-gold transition-colors">Lihat Semua Inventaris</button>
     </div>
 
     <div class="bg-syn-dark border border-syn-border rounded-2xl overflow-hidden flex-1 flex flex-col glow-border">
       <!-- Header -->
       <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-syn-border text-[11px] font-bold text-syn-muted tracking-wider uppercase">
-        <div class="col-span-5">Item Details</div>
-        <div class="col-span-3">Stock Level</div>
-        <div class="col-span-3">Market Demand</div>
+        <div class="col-span-5">Detail Produk</div>
+        <div class="col-span-3">Level Stok</div>
+        <div class="col-span-3">Permintaan Pasar</div>
         <div class="col-span-1 text-right">Status</div>
       </div>
 
       <!-- Rows -->
       <div v-if="isLoading" class="flex-1 flex items-center justify-center text-syn-muted">
-        Loading products...
+        Memuat produk...
       </div>
       <div v-else-if="products.length === 0" class="flex-1 flex items-center justify-center text-syn-muted">
-        No products found for this business.
+        Belum ada produk untuk bisnis ini.
       </div>
       <div v-else class="flex-1 divide-y divide-syn-border overflow-y-auto max-h-100">
         <div v-for="product in products" :key="product.id" class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-syn-surface transition-colors group">
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="col-span-3 flex flex-col justify-center">
-            <span class="text-sm font-semibold text-syn-cream mb-1.5">{{ product.stock }} Units</span>
+            <span class="text-sm font-semibold text-syn-cream mb-1.5">{{ product.stock }} Unit</span>
             <div class="h-1.5 w-24 bg-syn-border rounded-full overflow-hidden">
               <div class="h-full rounded-full" :class="getStockLevelColor(product.stock, product.min_stock)" :style="{ width: getStockLevelWidth(product.stock, product.min_stock) }"></div>
             </div>
@@ -43,7 +43,7 @@
           <div class="col-span-3">
             <div class="inline-flex items-center gap-1.5 px-2.5 py-1 h-7 rounded-lg bg-syn-accent/10 text-syn-accent border border-syn-accent/20">
               <Icon name="heroicons:map-pin" class="w-3.5 h-3.5" />
-              <span class="text-[11px] font-medium leading-tight">Steady Demand<br/>within 10km</span>
+              <span class="text-[11px] font-medium leading-tight">Permintaan Stabil<br/>dalam 10km</span>
             </div>
           </div>
           <div class="col-span-1 text-right">
@@ -110,9 +110,9 @@ const getStockLevelWidth = (stock: number, minStock: number | undefined) => {
 
 const getProductStatus = (stock: number, minStock: number | undefined) => {
   if (minStock === undefined) minStock = 10; // Default min stock if not provided
-  if (stock === 0) return 'Out of Stock';
-  if (stock <= minStock) return 'Low Stock';
-  return 'In Stock';
+  if (stock === 0) return 'Habis';
+  if (stock <= minStock) return 'Stok Rendah';
+  return 'Tersedia';
 };
 
 const getProductStatusColor = (stock: number, minStock: number | undefined) => {

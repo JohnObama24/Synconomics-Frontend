@@ -2,27 +2,27 @@
   <div class="space-y-8">
     <!-- Header -->
     <div>
-      <h1 class="text-3xl font-serif text-syn-cream mb-2 tracking-tight">Business Health Overview</h1>
-      <p class="text-syn-muted text-[15px]">Global performance metrics for the current fiscal quarter.</p>
+      <h1 class="text-3xl font-serif text-syn-cream mb-2 tracking-tight">Ringkasan Kesehatan Bisnis</h1>
+      <p class="text-syn-muted text-[15px]">Metrik performa bisnis untuk periode bulan ini.</p>
     </div>
 
     <!-- Stats Grid -->
     <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <DashboardStatCard title="Loading..." value="-" :trend="0" icon="heroicons:arrow-trending-up" iconColor="success" />
-      <DashboardStatCard title="Loading..." value="-" :trend="0" icon="heroicons:banknotes" iconColor="danger" />
-      <!-- <DashboardStatCard title="Loading..." value="-" :trend="0" icon="heroicons:cog" iconColor="warning" /> -->
-      <DashboardStatCard title="Loading..." value="-" :trend="0" icon="heroicons:building-library" iconColor="accent" />
+      <DashboardStatCard title="Memuat..." value="-" :trend="0" icon="heroicons:arrow-trending-up" iconColor="success" />
+      <DashboardStatCard title="Memuat..." value="-" :trend="0" icon="heroicons:banknotes" iconColor="danger" />
+      <!-- <DashboardStatCard title="Memuat..." value="-" :trend="0" icon="heroicons:cog" iconColor="warning" /> -->
+      <DashboardStatCard title="Memuat..." value="-" :trend="0" icon="heroicons:building-library" iconColor="accent" />
     </div>
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       <DashboardStatCard 
-        title="Total Revenue" 
+        title="Total Pendapatan" 
         :value="formatCurrency(currentMonthRevenue)" 
         :trend="totalRevenueTrend" 
         icon="heroicons:arrow-trending-up"
         iconColor="success"
       />
       <DashboardStatCard 
-        title="Total Cost" 
+        title="Total Pengeluaran" 
         :value="formatCurrency(currentMonthCost)" 
         :trend="totalCostTrend" 
         icon="heroicons:banknotes"
@@ -37,7 +37,7 @@
         iconColor="warning"
       /> -->
       <DashboardStatCard 
-        title="Net Profit" 
+        title="Laba Bersih" 
         :value="formatCurrency(currentMonthNetProfit)" 
         :trend="netProfitTrend" 
         icon="heroicons:building-library"

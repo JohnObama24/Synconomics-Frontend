@@ -3,7 +3,7 @@
     <!-- Back button -->
     <NuxtLink to="/dashboard/community" class="inline-flex items-center gap-2 text-sm text-syn-muted hover:text-syn-accent transition-colors font-medium">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-      Back to Community
+      Kembali ke Komunitas
     </NuxtLink>
 
     <div v-if="isLoading && !currentThread" class="py-20 flex justify-center">
@@ -19,13 +19,13 @@
         </div>
         <div class="flex-1 mt-1">
           <div class="flex items-center justify-between">
-            <h2 class="font-medium text-white text-lg">{{ currentThread.user?.name || 'Unknown User' }}</h2>
+            <h2 class="font-medium text-white text-lg">{{ currentThread.user?.name || 'Pengguna Tidak Dikenal' }}</h2>
             <div class="flex items-center gap-4">
               <span class="text-sm text-syn-muted">{{ formatDate(currentThread.created_at) }}</span>
-              <button v-if="user && currentThread.user_id === user.id" @click.prevent="handleDeleteThreadDetail" class="text-xs text-red-400 hover:text-red-300 transition-colors bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg border border-red-400/20 font-medium">Hapus Thread</button>
+              <button v-if="user && currentThread.user_id === user.id" @click.prevent="handleDeleteThreadDetail" class="text-xs text-red-400 hover:text-red-300 transition-colors bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg border border-red-400/20 font-medium">Hapus Diskusi</button>
             </div>
           </div>
-          <p class="text-sm text-syn-muted">{{ currentThread.user?.email || 'No contact info' }}</p>
+          <p class="text-sm text-syn-muted">{{ currentThread.user?.email || 'Tidak ada info kontak' }}</p>
         </div>
       </div>
 
@@ -42,7 +42,7 @@
     <div v-if="currentThread" class="pt-4">
       <h3 class="font-medium text-white mb-6 flex items-center gap-2">
         <svg class="w-5 h-5 text-syn-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-        {{ replies.length }} Replies
+        {{ replies.length }} Balasan
       </h3>
 
       <div class="space-y-4 mb-8">
@@ -56,7 +56,7 @@
           </div>
           <div class="flex-1 min-w-0 group/reply relative">
             <div class="flex items-center gap-2 mb-2">
-              <span class="font-medium text-white text-sm">{{ reply.user?.name || 'Unknown User' }}</span>
+              <span class="font-medium text-white text-sm">{{ reply.user?.name || 'Pengguna Tidak Dikenal' }}</span>
               <span class="text-xs text-syn-muted">&bull;</span>
               <span class="text-xs text-syn-muted">{{ formatDate(reply.created_at) }}</span>
             </div>
@@ -68,8 +68,8 @@
                 class="w-full bg-syn-darker border border-white/10 rounded-xl px-3 py-2 focus:border-syn-accent outline-none text-white resize-none"
               ></textarea>
               <div class="flex gap-2 mt-2">
-                <button @click="submitEditReply(reply.id)" class="px-3 py-1 bg-syn-accent text-syn-dark rounded-md font-medium text-xs">Save</button>
-                <button @click="editingReplyId = null" class="px-3 py-1 bg-white/5 text-syn-muted rounded-md font-medium text-xs">Cancel</button>
+                <button @click="submitEditReply(reply.id)" class="px-3 py-1 bg-syn-accent text-syn-dark rounded-md font-medium text-xs">Simpan</button>
+                <button @click="editingReplyId = null" class="px-3 py-1 bg-white/5 text-syn-muted rounded-md font-medium text-xs">Batal</button>
               </div>
             </div>
             <p v-else class="text-sm text-syn-cream/80 leading-relaxed font-sans">{{ reply.content }}</p>
@@ -87,7 +87,7 @@
           <textarea 
             v-model="replyContent"
             rows="2"
-            placeholder="Write a reply..."
+            placeholder="Tulis balasan..."
             required
             class="flex-1 bg-syn-darker border border-white/10 rounded-xl px-4 py-3 focus:border-syn-accent outline-none text-white placeholder-white/20 transition-colors resize-none text-sm"
           ></textarea>
@@ -96,7 +96,7 @@
             :disabled="isSaving"
             class="px-6 py-3 shrink-0 bg-syn-accent text-syn-dark rounded-xl font-display font-medium hover:bg-white transition-colors disabled:opacity-50 h-fit self-end"
           >
-            {{ isSaving ? 'Sending...' : 'Post Reply' }}
+            {{ isSaving ? 'Mengirim...' : 'Kirim Balasan' }}
           </button>
         </form>
       </div>
@@ -192,10 +192,10 @@ const formatDate = (dateString: string) => {
   const now = new Date();
   const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
   
-  if (diffInHours < 1) return 'Just now';
-  if (diffInHours < 24) return `${diffInHours}h ago`;
+  if (diffInHours < 1) return 'Baru saja';
+  if (diffInHours < 24) return `${diffInHours} jam lalu`;
   
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat('id-ID', {
     month: 'short',
     day: 'numeric',
     hour: 'numeric',
