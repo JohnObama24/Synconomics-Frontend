@@ -71,6 +71,15 @@
 
 
       <NuxtLink
+        to="/dashboard/audit"
+        exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent"
+        class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"
+      >
+        <Icon name="heroicons:document-magnifying-glass" class="w-5 h-5 group-hover:text-syn-cream group-[.router-link-exact-active]:text-syn-accent transition-colors" />
+        <span class="font-medium text-[15px]">Audit AI</span>
+      </NuxtLink>
+
+      <NuxtLink
         to="/ai/chat"
         exact-active-class="bg-syn-accent/10 border border-syn-accent/20 text-syn-accent"
         class="flex items-center gap-3 px-3 py-2.5 text-syn-muted hover:text-syn-cream hover:bg-syn-surface border border-transparent rounded-lg transition-all group"

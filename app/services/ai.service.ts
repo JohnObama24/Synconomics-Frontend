@@ -56,5 +56,11 @@ export const aiService = {
       method: 'POST',
       body: payload
     });
+  },
+
+  getAudit(businessId: number): Promise<ApiResponse<string>> {
+    return apiFetch(`/ai/audit/${businessId}`, {
+      method: 'POST'
+    });
   }
 };

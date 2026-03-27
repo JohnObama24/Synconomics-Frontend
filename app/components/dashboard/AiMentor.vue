@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col h-full text-left">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-lg font-semibold text-syn-cream flex items-center gap-2">
         Saran Mentor AI
@@ -13,10 +13,7 @@
       <div v-if="isLoading" class="p-6 flex-1 flex items-center justify-center text-syn-muted">
         Membuat saran AI...
       </div>
-      <div v-else-if="error" class="p-6 flex-1 flex items-center justify-center text-syn-danger">
-        Kesalahan: {{ error }}
-      </div>
-      <div v-else-if="sessionResult && sessionResult.resume" class="p-6 flex-1 overflow-y-auto space-y-6">
+      <div v-else-if="sessionResult && sessionResult.resume" class="p-6 flex-1 overflow-y-auto space-y-6 custom-scrollbar">
         <!-- Advice Item -->
         <div>
           <p class="text-[10px] font-bold text-syn-gold tracking-wider uppercase mb-1.5">Ringkasan AI</p>
@@ -26,18 +23,20 @@
           </p>
         </div>
       </div>
-      <div v-else class="p-6 flex-1 flex items-center justify-center text-syn-muted">
-        Belum ada saran AI. Klik tombol di bawah untuk membuat.
+      <div v-else class="p-6 flex-1 flex flex-col items-center justify-center text-syn-muted text-center px-4 space-y-4">
+        <Icon name="heroicons:light-bulb" class="w-8 h-8 text-syn-accent/20" />
+        <p class="text-sm">Gunakan AI Audit untuk mendapatkan analisis mendalam tentang performa bisnis Anda secara otomatis.</p>
       </div>
 
-      <div class="p-4 border-t border-syn-border bg-syn-darker/50 backdrop-blur-sm">
-        <button 
-          @click="generateAdvice" 
-          :disabled="isLoading || !businessId"
-          class="w-full bg-syn-accent hover:bg-syn-gold text-syn-darker font-bold text-sm py-2.5 rounded-xl transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+      <div class="p-4 border-t border-syn-border bg-syn-darker/50 backdrop-blur-sm mt-auto">
+        <NuxtLink 
+          :to="businessId ? `/dashboard/audit/${businessId}` : '#'" 
+          class="w-full bg-syn-accent hover:bg-syn-gold text-syn-darker font-bold text-sm py-2.5 rounded-xl transition-all shadow-sm inline-flex items-center justify-center gap-2 group/btn disabled:opacity-50 disabled:cursor-not-allowed"
+          :class="{ 'opacity-50 cursor-not-allowed pointer-events-none': !businessId }"
         >
-          {{ isLoading ? 'Memproses...' : 'Buat Audit Lengkap' }}
-        </button>
+          <Icon name="heroicons:document-magnifying-glass" class="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+          Buat Audit Lengkap
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -51,17 +50,14 @@ const props = defineProps<{
   businessId: number | null;
 }>();
 
-const { isLoading, error, sessionResult, initSession, closeAndGetResult } = useAI();
+const { isLoading, sessionResult, initSession, closeAndGetResult } = useAI();
 
 const generateAdvice = async () => {
-  if (!props.businessId) {
-    console.error("Business ID is required to generate AI advice.");
-    return;
-  }
-  // For simplicity, we'll initiate a new session and get a result.
-  // In a real app, you might want to check for existing sessions or have a more complex flow.
-  await initSession(props.businessId, 'strategy'); // Or 'idea_generation', 'validation'
-  if (!error.value && useAI().currentSessionId.value) {
+  if (!props.businessId || sessionResult.value) return;
+  
+  // Initial summary sequence (if not already fetched)
+  await initSession(props.businessId, 'strategy');
+  if (useAI().currentSessionId.value) {
     await closeAndGetResult();
   }
 };
@@ -78,3 +74,19 @@ watch(() => props.businessId, (newId) => {
   }
 });
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(196, 167, 125, 0.2);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 167, 125, 0.4);
+}
+</style>
